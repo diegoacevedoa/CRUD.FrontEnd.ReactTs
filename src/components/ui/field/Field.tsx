@@ -6,14 +6,18 @@ interface IField {
   name: string;
   type: string;
   label: string;
-  value: string;
+  value?: string;
   placeHolder: string;
   tabIndex: number;
   required: boolean;
   disabled: boolean;
-  className: string;
+  className?: string;
+  autoFocus: boolean;
+  autoComplete: string;
+  error?: string;
+  isInvalid?: boolean;
   onChange: Function;
-  onBlur: Function;
+  onBlur?: Function;
 }
 
 const Field = ({
@@ -27,6 +31,10 @@ const Field = ({
   required = false,
   disabled = false,
   className = "",
+  autoFocus = false,
+  autoComplete = "off",
+  error = "",
+  isInvalid = false,
   onChange,
   onBlur,
 }: IField) => {
@@ -46,31 +54,48 @@ const Field = ({
       : className;
   }, [className]);
 
+  const classFieldControl = useMemo(() => {
+    var setClass = "mb-field-control ";
+
+    if (type === "password") {
+      setClass += "mb-input-group-password";
+    }
+
+    if (isInvalid) {
+      setClass += "is-invalid";
+    }
+
+    return setClass;
+  }, [type, isInvalid]);
+
   return (
     <>
-      {label && (
-        <label htmlFor={name}>
-          {label}&nbsp;
-          {required && <span className="text-danger">*</span>}
-        </label>
-      )}
-      <input
-        id={id}
-        name={name}
-        type={type}
-        tabIndex={tabIndex}
-        value={value ?? ""}
-        placeholder={placeHolder}
-        required={required}
-        disabled={disabled}
-        className={
-          type === "password"
-            ? "mb-field-control mb-input-group"
-            : "mb-field-control"
-        }
-        onChange={handleOnChange}
-        onBlur={handleOnBlur}
-      />
+      <div className="mb-field">
+        {label && (
+          <label htmlFor={name} className="mb-form-label">
+            {label}&nbsp;
+            {required && <span className="mb-text-danger">*</span>}
+          </label>
+        )}
+        <div className="mb-input-group">
+          <input
+            id={id}
+            name={name}
+            type={type}
+            tabIndex={tabIndex}
+            value={value ?? ""}
+            placeholder={placeHolder}
+            required={required}
+            disabled={disabled}
+            className={classFieldControl}
+            autoFocus={autoFocus}
+            autoComplete={autoComplete}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+          />
+          {isInvalid && <div className="mb-invalid-feedback">{error}</div>}
+        </div>
+      </div>
     </>
   );
 };

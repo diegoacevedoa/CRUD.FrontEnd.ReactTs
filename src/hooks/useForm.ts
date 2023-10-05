@@ -7,6 +7,11 @@ export interface IUseForm {
   initialState: T;
 }
 
+export interface IChangeForm {
+  name: string;
+  value: string;
+}
+
 // export const useForm = <T extends Object>(initialState: T) => {
 export const useForm = ({ initialState }: IUseForm) => {
   const [formValues, setFormValues] = useState(initialState);
@@ -15,9 +20,7 @@ export const useForm = ({ initialState }: IUseForm) => {
     setFormValues(newFormState);
   };
 
-  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = target;
-
+  const handleChange = ({ name = "", value = "" }: IChangeForm) => {
     setFormValues({
       ...formValues,
       [name]: value,

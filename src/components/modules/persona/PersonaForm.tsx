@@ -8,6 +8,7 @@ import SalidaIcon from "../../ui/icons/SalidaIcon";
 import Swal from "sweetalert2";
 import { createPersona, updatePersona } from "../../../api/persona";
 import { IUseForm, useForm } from "../../../hooks/useForm";
+import Field from "../../ui/field";
 
 interface IPersonaForm {
   titleModal: string;
@@ -46,7 +47,9 @@ export const PersonaForm = ({
     initialState: activeForm,
   };
 
-  const { formValues, handleChange, reset } = useForm(paramUseForm);
+  const { formValues, handleChange, reset } = useForm<IUseForm>(paramUseForm);
+
+  // const { noDocumento } = formValues;
 
   //Guarda un valor mutable
   const activeId = useRef(activeForm.idPersona);
@@ -148,54 +151,58 @@ export const PersonaForm = ({
         >
           <div className="row">
             <div className="col-4">
-              {/* <Field
+              <Field
                 id="noDocumento"
-                label="No Documento"
-                placeholder="Ingrese No Documento"
-                onChange={handleInputChange}
-                value={formValues.noDocumento}
-                autoFocus={true}
-                autoComplete="off"
+                name="noDocumento"
                 type="text"
-                disabled={loadingModal}
+                label="No Documento"
+                // value={formValues.noDocumento}
+                placeHolder="Ingrese No Documento"
+                tabIndex={1}
                 required
-                error={validationValues.noDocumento.message}
-                isInvalid={validationValues.noDocumento.invalid}
-                index={1}
-              /> */}
+                disabled={loadingModal}
+                autoFocus={false}
+                autoComplete="off"
+                // error={validationValues.noDocumento.message}
+                // isInvalid={validationValues.noDocumento.invalid}
+                error="El No Documento es requerido."
+                isInvalid={true}
+                onChange={handleChange}
+              />
             </div>
             <div className="col-4">
               {/* <Field
                 id="nombres"
+                name="nombres"
+                type="text"
                 label="Nombres"
-                placeholder="Ingrese Nombres"
-                onChange={handleInputChange}
                 value={formValues.nombres}
+                placeHolder="Ingrese Nombres"
+                tabIndex={2}
+                required
+                disabled={loadingModal}
                 autoFocus={true}
                 autoComplete="off"
-                type="text"
-                disabled={loadingModal}
-                required
                 error={validationValues.nombres.message}
                 isInvalid={validationValues.nombres.invalid}
-                index={2}
+                onChange={handleChange}
               /> */}
             </div>
             <div className="col-4">
               {/* <Field
                 id="apellidos"
+                name="apellidos"
+                type="text"
                 label="Apellidos"
-                placeholder="Ingrese Apellidos"
-                onChange={handleInputChange}
-                value={formValues.apellidos}
+                 value={formValues.apellidos}
+                placeHolder="Ingrese Apellidos"
+                tabIndex={3}
+                disabled={loadingModal}
                 autoFocus={true}
                 autoComplete="off"
-                type="text"
-                disabled={loadingModal}
-                required
                 error={validationValues.apellidos.message}
                 isInvalid={validationValues.apellidos.invalid}
-                index={3}
+                onChange={handleChange}
               /> */}
             </div>
           </div>

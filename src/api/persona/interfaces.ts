@@ -13,3 +13,11 @@ export interface IUpdatePersona extends IBasePersona {
 export interface IDataPersona extends IBasePersona {
   idPersona: number;
 }
+
+export interface ResponseAPI {
+  apiCode: number;
+  apiData: any;
+  apiError: boolean;
+  apiErrors: string;
+  apiMessage: string;
+}

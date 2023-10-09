@@ -1,6 +1,6 @@
 import { API } from "../../helpers/constants";
 import { fetchSinToken, IFetchSinToken } from "../../helpers/fetch";
-import { ICreatePersona, IUpdatePersona } from "./interfaces";
+import { ICreatePersona, IUpdatePersona, ResponseAPI } from "./interfaces";
 
 export const getAllPersonas = async () => {
   try {
@@ -14,7 +14,7 @@ export const getAllPersonas = async () => {
     const body = await response.json();
 
     if (response.status === 200) {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: body,
         apiError: false,
@@ -22,7 +22,7 @@ export const getAllPersonas = async () => {
         apiMessage: body.msg,
       };
     } else {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: null,
         apiError: true,
@@ -39,8 +39,8 @@ export const getAllPersonas = async () => {
   } catch (error: any) {
     console.log(error);
 
-    return {
-      apiCode: "401",
+    return <ResponseAPI>{
+      apiCode: 401,
       apiData: null,
       apiError: true,
       apiErrors:
@@ -68,7 +68,7 @@ export const createPersona = async (item: ICreatePersona) => {
     const body = await response.json();
 
     if (response.status === 200) {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: body,
         apiError: false,
@@ -76,7 +76,7 @@ export const createPersona = async (item: ICreatePersona) => {
         apiMessage: body.msg,
       };
     } else {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: null,
         apiError: true,
@@ -93,8 +93,8 @@ export const createPersona = async (item: ICreatePersona) => {
   } catch (error: any) {
     console.log(error);
 
-    return {
-      apiCode: "401",
+    return <ResponseAPI>{
+      apiCode: 401,
       apiData: null,
       apiError: true,
       apiErrors:
@@ -123,7 +123,7 @@ export const updatePersona = async (item: IUpdatePersona) => {
     const body = await response.json();
 
     if (response.status === 200) {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: body,
         apiError: false,
@@ -131,7 +131,7 @@ export const updatePersona = async (item: IUpdatePersona) => {
         apiMessage: body.msg,
       };
     } else {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: null,
         apiError: true,
@@ -148,8 +148,8 @@ export const updatePersona = async (item: IUpdatePersona) => {
   } catch (error: any) {
     console.log(error);
 
-    return {
-      apiCode: "401",
+    return <ResponseAPI>{
+      apiCode: 401,
       apiData: null,
       apiError: true,
       apiErrors:
@@ -173,7 +173,7 @@ export const deletePersona = async (id: number) => {
     const body = await response.json();
 
     if (response.status === 200) {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: body,
         apiError: false,
@@ -181,7 +181,7 @@ export const deletePersona = async (id: number) => {
         apiMessage: body.msg,
       };
     } else {
-      return {
+      return <ResponseAPI>{
         apiCode: response.status,
         apiData: null,
         apiError: true,
@@ -198,8 +198,8 @@ export const deletePersona = async (id: number) => {
   } catch (error: any) {
     console.log(error);
 
-    return {
-      apiCode: "401",
+    return <ResponseAPI>{
+      apiCode: 401,
       apiData: null,
       apiError: true,
       apiErrors:

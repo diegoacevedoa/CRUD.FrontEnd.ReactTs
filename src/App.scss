@@ -21,51 +21,83 @@ body {
   margin-left: calc(-0.5 * 1.5rem);
 }
 
-// .row::after {
-//   content: "";
-//   clear: both;
-//   display: table;
-// }
-
-.col {
+col {
   flex: 1 0 0%;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 
 .col-1 {
   width: 8.33%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-2 {
   width: 16.66%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-3 {
   width: 25%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-4 {
   width: 33.33%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-5 {
   width: 41.66%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-6 {
   width: 50%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-7 {
   width: 58.33%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-8 {
   width: 66.66%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-9 {
   width: 75%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-10 {
   width: 83.33%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-11 {
   width: 91.66%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 .col-12 {
   width: 100%;
+  flex: 0 0 auto;
+  padding-right: calc(0.5 * 1.5rem);
+  padding-left: calc(0.5 * 1.5rem);
 }
 
 .container-fluid {
@@ -76,4 +108,10 @@ body {
   padding-left: calc(1.5rem * 0.5);
   margin-right: auto;
   margin-left: auto;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
 }

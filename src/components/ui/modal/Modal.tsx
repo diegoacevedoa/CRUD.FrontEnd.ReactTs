@@ -30,13 +30,13 @@ const Modal = ({
       );
     }
     return null;
-  }, []);
+  }, [head]);
 
   const showBody = useMemo(() => {
     if (body) {
       return <div className="modal-body">{body}</div>;
     }
-  }, []);
+  }, [body]);
 
   const showFooter = useMemo(() => {
     if (foot) {
@@ -44,11 +44,11 @@ const Modal = ({
     }
 
     return null;
-  }, []);
+  }, [foot]);
 
   const sizeClass = useMemo(() => {
     return `modal-content ${size}`;
-  }, []);
+  }, [size]);
 
   if (!show) {
     return null;

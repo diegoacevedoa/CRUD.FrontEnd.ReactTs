@@ -7,7 +7,7 @@ import {
 import Table from "../../ui/table";
 import Swal from "sweetalert2";
 import Loading from "../../ui/loading";
-import { IDataPersona } from "../../../api/persona/interfaces";
+import { IDataPersona, ResponseAPI } from "../../../api/persona/interfaces";
 import EditarIcon from "../../ui/icons/EditarIcon";
 import EliminarIcon from "../../ui/icons/EliminarIcon";
 
@@ -36,31 +36,37 @@ export const PersonaList = ({
     handleGetAllPersonas();
   }, []);
 
-  const handleEdit = useCallback((item: IDataPersona) => {
-    setTitleModal("Editar Registro");
-    setIsNewModal(false);
-    setShowModal(true);
-    setActiveForm(item);
-  }, []);
+  const handleEdit = useCallback(
+    (item: IDataPersona) => {
+      setTitleModal("Editar Registro");
+      setIsNewModal(false);
+      setShowModal(true);
+      setActiveForm(item);
+    },
+    [allData]
+  );
 
-  const handleDelete = useCallback((id: number) => {
-    Swal.fire({
-      title: "Confirmación!",
-      text: "Está seguro de querer eliminar el registro?",
-      icon: "warning",
-      showConfirmButton: true,
-      showCancelButton: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleDeletePersona(id);
-      }
-    });
-  }, []);
+  const handleDelete = useCallback(
+    (id: number) => {
+      Swal.fire({
+        title: "Confirmación!",
+        text: "Está seguro de querer eliminar el registro?",
+        icon: "warning",
+        showConfirmButton: true,
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleDeletePersona(id);
+        }
+      });
+    },
+    [allData]
+  );
 
   const handleGetAllPersonas = useCallback(async () => {
     setLoading(true);
 
-    const response = await getAllPersonas();
+    const response: ResponseAPI = await getAllPersonas();
 
     if (response.apiError) {
       Swal.fire(
@@ -70,54 +76,58 @@ export const PersonaList = ({
       );
 
       setAllData([]);
-    } else {
-      if (response.apiData != null && response.apiData.data.length > 0) {
-        const list: IDataPersona[] = [];
-        response.apiData.data.forEach((item: IDataPersona) => {
-          list.push({
+    } else if (response.apiData != null && response.apiData.data.length > 0) {
+      const list: IDataPersona[] = response.apiData.data.map(
+        (item: IDataPersona) => {
+          return {
             idPersona: item.idPersona,
             noDocumento: item.noDocumento,
             nombres: item.nombres,
             apellidos: item.apellidos,
-          });
-        });
+          };
+        }
+      );
 
-        setAllData(list);
+      setAllData(list);
+    } else {
+      Swal.fire("Advertencia", "La consulta no retornó registros. ", "warning");
+
+      setAllData([]);
+    }
+
+    setLoading(false);
+  }, []);
+
+  const handleDeletePersona = useCallback(
+    async (id: number) => {
+      setLoading(true);
+
+      const response: ResponseAPI = await deletePersona(id);
+
+      if (response.apiError) {
+        Swal.fire(
+          "Error",
+          response.apiMessage + " " + (response.apiErrors ?? ""),
+          "error"
+        );
       } else {
         Swal.fire(
-          "Advertencia",
-          "La consulta no retornó registros. ",
-          "warning"
+          "OK!",
+          "El registro se ha eliminado exitosamente.",
+          "success"
         );
 
-        setAllData([]);
+        const newList: IDataPersona[] = allData.filter(
+          (item) => item.idPersona !== id
+        );
+
+        setAllData(newList);
       }
-    }
 
-    setLoading(false);
-  }, []);
-
-  const handleDeletePersona = useCallback(async (id: number) => {
-    setLoading(true);
-
-    const response = await deletePersona(id);
-
-    if (response.apiError) {
-      Swal.fire(
-        "Error",
-        response.apiMessage + " " + (response.apiErrors ?? ""),
-        "error"
-      );
-    } else {
-      Swal.fire("OK!", "El registro se ha eliminado exitosamente.", "success");
-
-      const newList = allData.filter((item) => item.idPersona !== id);
-
-      setAllData(newList);
-    }
-
-    setLoading(false);
-  }, []);
+      setLoading(false);
+    },
+    [allData]
+  );
 
   const getColums = useMemo(() => {
     return mapHeadPersona.columns.map((column) => {
@@ -158,7 +168,7 @@ export const PersonaList = ({
         },
       };
     });
-  }, []);
+  }, [allData]);
 
   return (
     <>

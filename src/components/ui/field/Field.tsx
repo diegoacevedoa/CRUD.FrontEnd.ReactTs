@@ -9,7 +9,7 @@ interface IField {
   value?: string;
   placeHolder: string;
   tabIndex: number;
-  required: boolean;
+  required?: boolean;
   disabled: boolean;
   className?: string;
   autoFocus: boolean;
@@ -39,7 +39,7 @@ const Field = ({
   onBlur,
 }: IField) => {
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    onChange({ name, value: event.target.value, event });
+    onChange({ id, value: event.target.value, event });
   }, []);
 
   const handleOnBlur = useCallback(() => {
@@ -55,7 +55,7 @@ const Field = ({
   }, [className]);
 
   const classFieldControl = useMemo(() => {
-    var setClass = "mb-field-control ";
+    let setClass = "mb-field-control ";
 
     if (type === "password") {
       setClass += "mb-input-group-password";
